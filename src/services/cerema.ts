@@ -2,20 +2,13 @@ import { capture } from "./sentry";
 import { CeremaApiResponse, CeremaFeatureAttributes } from "@/types/cerema";
 import { CeremaProperty, ECS_ENERGIES, ECS_TYPES, HEATING_EMITTER_TYPES, HEATING_ENERGIES, HEATING_TYPES, StandardCeremaResponse } from "@/types/responses/property";
 
-// const CEREMA_API_URL = "https://cartagene.cerema.fr/server/rest/services/referentiels_c_2025_enrezo_dev_pacoupa/MapServer/0/query";
-const CEREMA_API_URL = "https://cartagene.cerema.fr/server/rest/services/Hosted/pacoupa/FeatureServer";
-
-/* 
-> Modifications à prendre en compte sur le libellé des attributs :
-> - libelle_adresse devient adresse
-> - gmi_sondes_200 devient gmi_sonde_200
-*/
+const CEREMA_API_URL = "https://cartagene.cerema.fr/server/rest/services/Hosted/pacoupa/FeatureServer/0/query";
 
 export async function getCeremaData(address: string): Promise<CeremaFeatureAttributes[]> {
   try {
     const params = new URLSearchParams({
       f: "json",
-      where: `UPPER(libelle_adresse) = UPPER('${address}')`,
+      where: `UPPER(adresse) = UPPER('${address}')`,
       outFields: "*",
       returnGeometry: "true",
     });
@@ -169,7 +162,7 @@ function transformSingleProperty(feature: CeremaFeatureAttributes): CeremaProper
   if (attributes.ac3 === 1) constraintsEnvironmental = "réserve naturelle";
 
   return {
-    address: attributes.libelle_adresse,
+    address: attributes.adresse,
     constructionYear: attributes.annee_construction ? attributes.annee_construction : null,
     housingCount: attributes.nb_logement ? attributes.nb_logement.toString() : null,
     heatedArea: (attributes.surf_res_ind || 0) + (attributes.surf_res_col || 0) + (attributes.surf_ter || 0),
@@ -185,7 +178,7 @@ function transformSingleProperty(feature: CeremaFeatureAttributes): CeremaProper
     constraintsAtmosphereProtection: constraintsEnvironmental !== null || constraintsHeritage !== null || attributes.liste_ppa ? true : false,
     geothermalWaterZoning: attributes.gmi_nappe_200,
     geothermalWaterEnergyPotential: attributes.pot_nappe_text || null,
-    geothermalProbeZoning: attributes.gmi_sondes_200,
+    geothermalProbeZoning: attributes.gmi_sonde_200,
     geothermalProbeCoverageRate: attributes.couv_sondes_200,
     solarThermalEnergyProduction: attributes.prod_st_mwh_an,
     solarThermalCoverageRate: attributes.couv_st_ecs,

@@ -1,5 +1,5 @@
 export interface CeremaFeatureAttributes {
-  libelle_adresse: string;
+  adresse: string;
   annee_construction?: number;
   nb_logement?: number;
   surf_res_ind?: number;
@@ -28,7 +28,7 @@ export interface CeremaFeatureAttributes {
   ac3?: number; // réserve naturelle
   liste_ppa?: string;
   gmi_nappe_200?: number;
-  gmi_sondes_200?: number;
+  gmi_sonde_200?: number;
   pot_nappe_text?: string;
   couv_sondes_200?: number;
   prod_st_mwh_an?: number;
