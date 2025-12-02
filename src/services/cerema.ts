@@ -8,7 +8,7 @@ export async function getCeremaData(address: string): Promise<CeremaFeatureAttri
   try {
     const params = new URLSearchParams({
       f: "json",
-      where: `adresse = '${address}'`,
+      where: `UPPER(adresse) = UPPER('${address}')`,
       outFields: "*",
       returnGeometry: "true",
     });
