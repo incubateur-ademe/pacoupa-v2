@@ -3,7 +3,8 @@ import { useStore } from "@/services/store";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-const MAPBOX_TOKEN = "pk.eyJ1IjoibGVvcG9sZHNlbGVnbyIsImEiOiJjbTJyeHl2cWQxbDVpMnJzYnl1aWJmMDJsIn0.3jwSQ3iHIaJifEcbOn0NvA";
+// Generated from https://console.mapbox.com/, account france-chaleur-urbaine
+const MAPBOX_TOKEN = "pk.eyJ1IjoiZnJhbmNlLWNoYWxldXItdXJiYWluZSIsImEiOiJjbWluOHoxeGwweWFyM2RzMXM1cGw4ZG5tIn0.2lMNby72PSGa7hxBE5c0UQ";
 
 interface Mapbox3DProps {
   width?: number;
