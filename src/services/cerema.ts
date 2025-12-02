@@ -8,7 +8,7 @@ export async function getCeremaData(address: string): Promise<CeremaFeatureAttri
   try {
     const params = new URLSearchParams({
       f: "json",
-      where: `UPPER(adresse) = UPPER('${address}')`,
+      where: `UPPER(adresse) = UPPER('${escapeQuotes(address)}')`,
       outFields: "*",
       returnGeometry: "true",
     });
@@ -183,4 +183,13 @@ function transformSingleProperty(feature: CeremaFeatureAttributes): CeremaProper
     solarThermalEnergyProduction: attributes.prod_st_mwh_an,
     solarThermalCoverageRate: attributes.couv_st_ecs,
   };
+}
+
+/**
+ * Escape single quotes in a string for SQL queries
+ * @param str - The string to escape
+ * @returns The escaped string with single quotes doubled
+ */
+function escapeQuotes(str: string): string {
+  return str.replace(/'/g, "''");
 }
